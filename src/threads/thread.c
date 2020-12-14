@@ -246,10 +246,10 @@ thread_unblock (struct thread *t)
 
   old_level = intr_disable ();
   ASSERT (t->status == THREAD_BLOCKED);
-  // list_push_back (&ready_list, &t->elem);
+  list_push_back (&ready_list, &t->elem);
 
   /* modified code*/
-  list_insert_ordered(&ready_list, &t->elem, thread_cmp_priority, NULL);
+  list_sort(&ready_list,thread_cmp_priority, NULL);
 
   t->status = THREAD_READY;
   t->wake_ticks = 0;
